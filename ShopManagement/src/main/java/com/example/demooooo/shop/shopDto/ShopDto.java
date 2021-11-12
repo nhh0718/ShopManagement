@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class ShopDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "shopid")
+    @Column(name = "idshop")
     private int id;
 
     @Column(name = "shopname")
