@@ -1,6 +1,7 @@
 package com.example.demooooo.shop.controller;
 
 
+import com.example.demooooo.dto.UserDto;
 import com.example.demooooo.shop.model.Shop;
 import com.example.demooooo.shop.service.ShopService;
 import com.example.demooooo.shop.shopDto.ShopDto;
@@ -63,5 +64,11 @@ public class ShopController {
         ra.addFlashAttribute("message", "The shop has been saved sucessfully!");
         ra.addAttribute("id", shop.getUserid());
         return "redirect:/shop";
+    }
+    @GetMapping("/addproduct")
+    public String admin(@RequestParam("id") Integer id, Model model){
+        ShopDto shopDto = shopService.findShopById(id).get();
+        model.addAttribute("shop", shopDto);
+            return "addproduct";
     }
 }
