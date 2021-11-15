@@ -37,6 +37,9 @@
         </tbody>
         </thead>
     </table>
+    <div th:object="${shop}">
+        <a th:href="@{/addproduct?id={id}(id=*{id})}">Thêm sản phẩm</a>
+    </div>
 </div>
 </body>
 </html>
