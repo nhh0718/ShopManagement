@@ -12,4 +12,5 @@ public interface ShopService {
     void deleteShop(Integer id);
     Optional<ShopDto> findShopById(Integer id);
     Optional<ShopDto> findShopByUserId(Integer id);
+    Optional<ShopDto> findShopByShopname(String shopname);
 }

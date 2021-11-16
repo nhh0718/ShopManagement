@@ -3,6 +3,8 @@ package com.example.demooooo.shop.shopDto;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Data
 @Table(name = "shop")
@@ -12,18 +14,17 @@ public class ShopDto {
     @Column(name = "idshop")
     private int id;
 
-    @Column(name = "shopname")
+    @NotBlank(message = "Chưa nhập tên cửa hàng!")
     private String shopname;
 
-    @Column(name = "shopaddress")
+    @NotBlank(message = "Chưa nhập địa chỉ cửa hàng!")
     private String shopaddress;
 
-    @Column(name = "shoptel")
+//    @Pattern(regexp="(^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$)", message = "Nhập sai sđt kìa !")
+    @NotBlank(message = "Chưa nhập số điện thoại!")
     private String shoptel;
 
-    @Column(name = "shopdesc")
     private String shopdesc;
 
-    @Column(name = "userid")
     private int userid;
 }

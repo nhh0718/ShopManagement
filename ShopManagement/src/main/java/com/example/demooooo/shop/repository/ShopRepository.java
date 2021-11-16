@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface ShopRepository extends JpaRepository<Shop, Integer> {
     Optional<Shop> findShopByUserid(Integer userid);
+    Optional<Shop> findShopByShopname(String shopname);
 }
