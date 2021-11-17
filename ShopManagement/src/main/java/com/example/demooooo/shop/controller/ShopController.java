@@ -54,27 +54,39 @@ public class ShopController {
   }
 
   @PostMapping(value = "shop/save")
-  public String saveUser(@Valid @ModelAttribute("shop") ShopDto shop, Errors errors, RedirectAttributes ra) {
+  public String saveUser(@Valid @ModelAttribute("shop") ShopDto shop, Errors errors, RedirectAttributes ra, String shopname) {
     if (errors.hasErrors()) {
       return "createShop";
     }
-    boolean check = false;
-    List<ShopDto> shopList = shopService.getAllShop();
-    for (ShopDto s : shopList) {
-      if (s.getShopname().equals(shop.getShopname())) {
-        check = true;
-      }
-    }
-    if (check) {
+//
+    Optional<ShopDto> checkname = shopService.findShopByShopname(shop.getShopname());
+    if (checkname.isPresent()) {
       ra.addFlashAttribute("errorMessage", "Tên cửa hàng đã tồn tại");
       ra.addAttribute("userid", shop.getUserid());
       return "redirect:/shop/new";
-    } else {
-      ra.addFlashAttribute("message", "Lưu cửa hàng thành công. ");
-      shopService.saveShop(shop);
     }
-    ra.addAttribute("id", shop.getUserid());
-    return "redirect:/shop";
+    else {
+      shopService.saveShop(shop);
+      ra.addFlashAttribute("message", "Lưu cửa hàng thành công. ");
+      ra.addAttribute("id", shop.getUserid());
+      return "redirect:/shop";
+    }
+//    boolean check = false;
+//    List<ShopDto> shopList = shopService.getAllShop();
+//    for (ShopDto s : shopList) {
+//      if (s.getShopname().equals(shop.getShopname())) {
+//        check = true;
+//      }
+//    }
+//    if (check) {
+//      ra.addFlashAttribute("errorMessage", "Tên cửa hàng đã tồn tại");
+//      ra.addAttribute("userid", shop.getUserid());
+//      return "redirect:/shop/new";
+//    } else {
+//      ra.addFlashAttribute("message", "Lưu cửa hàng thành công. ");
+//      shopService.saveShop(shop);
+//    }
+
   }
 
   @GetMapping("/addproduct")
@@ -86,28 +98,44 @@ public class ShopController {
 
   @PostMapping(value = "shop/update")
   public String update(
-      @Valid @ModelAttribute("shop") ShopDto shop, @RequestParam("id") Integer id, Errors errors, RedirectAttributes ra) {
+      @Valid @ModelAttribute("shop") ShopDto shop,
+      @RequestParam("id") Integer id,
+      Errors errors,
+      RedirectAttributes ra) {
     if (errors.hasErrors()) {
       return "editShop";
     }
-    boolean check = false;
-    List<ShopDto> shopList = shopService.getAllShop();
-    Optional<ShopDto> currentShop = shopService.findShopById(id);
-    for (ShopDto s : shopList) {
-      if (s.getShopname().equals(shop.getShopname())
-          && (!s.getShopname().equals(currentShop.get().getShopname()))) {
-        check = true;
-      }
-    }
-    if (check) {
+    Optional<ShopDto> checkname = shopService.findShopByShopname(shop.getShopname());
+    if (checkname.isPresent()) {
       ra.addFlashAttribute("errorMessage", "Tên cửa hàng đã tồn tại");
-      ra.addAttribute("id", shop.getId());
+      ra.addAttribute("userid", shop.getUserid());
       return "redirect:/shop/edit";
-    } else {
-      ra.addFlashAttribute("message", "Lưu cửa hàng thành công. ");
-      shopService.saveShop(shop);
     }
-    ra.addAttribute("id", shop.getUserid());
-    return "redirect:/shop";
+    else {
+      shopService.saveShop(shop);
+      ra.addFlashAttribute("message", "Lưu cửa hàng thành công. ");
+      ra.addAttribute("id", shop.getUserid());
+      return "redirect:/shop";
+    }
   }
+//    boolean check = false;
+//    List<ShopDto> shopList = shopService.getAllShop();
+//    Optional<ShopDto> currentShop = shopService.findShopById(id);
+//    for (ShopDto s : shopList) {
+//      if (s.getShopname().equals(shop.getShopname())
+//          && (!s.getShopname().equals(currentShop.get().getShopname()))) {
+//        check = true;
+//      }
+//    }
+//    if (check) {
+//      ra.addFlashAttribute("errorMessage", "Tên cửa hàng đã tồn tại");
+//      ra.addAttribute("id", shop.getId());
+//      return "redirect:/shop/edit";
+//    } else {
+//      ra.addFlashAttribute("message", "Lưu cửa hàng thành công. ");
+//      shopService.saveShop(shop);
+//    }
+//    ra.addAttribute("id", shop.getUserid());
+//    return "redirect:/shop";
+//  }
 }

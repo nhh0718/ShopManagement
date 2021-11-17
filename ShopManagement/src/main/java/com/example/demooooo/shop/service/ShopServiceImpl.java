@@ -48,6 +48,10 @@ public class ShopServiceImpl implements ShopService{
 
     @Override
     public Optional<ShopDto> findShopByShopname(String shopname){
-        return Optional.of(ShopMapper.INSTANCE.modelToDto(shopRepository.findShopByShopname(shopname).get()));
+        try{
+            return Optional.of(shopMapper.modelToDto(shopRepository.findShopByShopname(shopname).get()));
+        } catch (Exception ex){
+            return Optional.ofNullable(null);
+        }
     }
 }
