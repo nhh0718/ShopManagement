@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -20,7 +19,7 @@ public class ShopController {
 
   @GetMapping("shop")
   public String index(@RequestParam("id") Integer id, Model model, RedirectAttributes ra) {
-    Optional<ShopDto> check = shopService.findShopByUserId(id);
+    Optional<ShopDto> check = shopService.findShopByUserid(id);
     if (check.isPresent()) {
       model.addAttribute("shop", check.get());
       return "shop";
@@ -42,7 +41,7 @@ public class ShopController {
     Optional<ShopDto> shopEdit = shopService.findShopById(shopId);
     model.addAttribute("userid", shopEdit.get().getUserid());
     shopEdit.ifPresent(shop -> model.addAttribute("shop", shop));
-    return "editShop";
+    return "editShop"  ;
   }
 
   @RequestMapping(value = "/shop/delete")
@@ -54,7 +53,7 @@ public class ShopController {
   }
 
   @PostMapping(value = "shop/save")
-  public String saveUser(@Valid @ModelAttribute("shop") ShopDto shop, Errors errors, RedirectAttributes ra, String shopname) {
+  public String saveUser(@Valid @ModelAttribute("shop") ShopDto shop, Errors errors, RedirectAttributes ra) {
     if (errors.hasErrors()) {
       return "createShop";
     }
