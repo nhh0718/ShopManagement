@@ -20,14 +20,9 @@ public class ShopController {
 
   @GetMapping("shop")
   public String index(@RequestParam("id") Integer id, Model model, RedirectAttributes ra) {
-    List<ShopDto> shops = shopService.getAllShop();
     Optional<ShopDto> check = shopService.findShopByUserId(id);
     if (check.isPresent()) {
-      for (ShopDto s : shops) {
-        if (s.getUserid() == check.get().getUserid()) {
-          model.addAttribute("shop", s);
-        }
-      }
+      model.addAttribute("shop", check.get());
       return "shop";
     } else {
       ra.addAttribute("userid", id);
@@ -39,7 +34,6 @@ public class ShopController {
   public String addUser(@Valid @RequestParam("userid") Integer userid, Model model) {
     model.addAttribute("shop", new Shop());
     model.addAttribute("userid", userid);
-    model.addAttribute("pageTitle", "Add New Shop");
     return "createShop";
   }
 
@@ -60,8 +54,7 @@ public class ShopController {
   }
 
   @PostMapping(value = "shop/save")
-  public String saveUser(
-      @Valid @ModelAttribute("shop") ShopDto shop, Errors errors, RedirectAttributes ra) {
+  public String saveUser(@Valid @ModelAttribute("shop") ShopDto shop, Errors errors, RedirectAttributes ra) {
     if (errors.hasErrors()) {
       return "createShop";
     }
@@ -93,10 +86,7 @@ public class ShopController {
 
   @PostMapping(value = "shop/update")
   public String update(
-      @Valid @ModelAttribute("shop") ShopDto shop,
-      @RequestParam("id") Integer id,
-      Errors errors,
-      RedirectAttributes ra) {
+      @Valid @ModelAttribute("shop") ShopDto shop, @RequestParam("id") Integer id, Errors errors, RedirectAttributes ra) {
     if (errors.hasErrors()) {
       return "editShop";
     }

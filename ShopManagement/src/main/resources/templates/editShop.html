@@ -8,29 +8,28 @@
 <body>
 <div class="col-3"></div>
 <div class="container col-6">
-    <h1>Cập nhật cửa hàng</h1>
+    <h1 class=mr-3>Cập nhật cửa hàng</h1>
     <div th:if="${errorMessage}" class="alert alert-success text-center">
         <div th:text="${errorMessage}"></div>
     </div>
-    <div th:if="${message}" class="alert alert-success text-center"></div>
     <form th:object="${shop}" th:action="@{update}" action="#" method="post">
         <input type="hidden" th:value="${userid}" name="userid">
-        <input type="hidden" th:field="*{id}" >
+        <input type="hidden" th:field="*{id}">
         <div>
-            <p th:if="${#fields.hasErrors('shopname')}" th:errors="*{shopname}"></p>
             <label th:for="shopname">Tên cửa hàng</label>
+            <p th:if="${#fields.hasErrors('shopname')}" th:errors="*{shopname}"></p>
             <input type="text" th:field="*{shopname}" class="form-control"/>
         </div>
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
-            <p th:if="${#fields.hasErrors('shopaddress')}" th:errors="*{shopaddress}"></p>
             <label th:for="shopaddress">Địa chỉ</label>
+            <p th:if="${#fields.hasErrors('shopaddress')}" th:errors="*{shopaddress}"></p>
             <input type="text" th:field="*{shopaddress}" class="form-control"/>
         </div>
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
-            <p th:if="${#fields.hasErrors('shoptel')}" th:errors="*{shoptel}"></p>
             <label th:for="sdt">Số điện thoại</label>
+            <p th:if="${#fields.hasErrors('shoptel')}" th:errors="*{shoptel}"></p>
             <input type="text" th:field="*{shoptel}" class="form-control"/>
         </div>
         <div style="clear: both; display: block; height: 10px"></div>
@@ -41,7 +40,8 @@
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
             <input type="submit" class="btn btn-success" value="Save"/>
-            <a th:href="@{/shop?id={id}(id=*{id})}" type="button" class="btn btn-secondary m-2" onclick="cancelform()">Cancel</a>
+            <a th:href="@{/shop?id={id}(id=${userid})}" type="button" class="btn btn-secondary m-2"
+               onclick="cancelform()">Cancel</a>
         </div>
     </form>
 </div>

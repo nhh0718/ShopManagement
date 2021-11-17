@@ -39,7 +39,7 @@ public class ShopServiceImpl implements ShopService{
 
     @Override
     public Optional<ShopDto> findShopByUserId(Integer id) {
-        try{
+        try{   
             return Optional.of(shopMapper.modelToDto(shopRepository.findShopByUserid(id).get()));
         } catch (Exception ex){
             return Optional.ofNullable(null);
