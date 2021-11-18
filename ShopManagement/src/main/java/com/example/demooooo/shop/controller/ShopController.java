@@ -97,10 +97,10 @@ public class ShopController {
 
   @PostMapping(value = "shop/update")
   public String update(
-      @Valid @ModelAttribute("shop") ShopDto shop,
-      @RequestParam("id") Integer id,
-      Errors errors,
-      RedirectAttributes ra) {
+          @Valid @ModelAttribute("shop") ShopDto shop,
+          @RequestParam("id") Integer id,
+          Errors errors,
+          RedirectAttributes ra) {
     if (errors.hasErrors()) {
       return "editShop";
 
@@ -109,7 +109,7 @@ public class ShopController {
     Optional<ShopDto> checkname = shopService.findShopByShopname(shop.getShopname());
     if (checkname.isPresent()) {
       ra.addFlashAttribute("errorMessage", "Tên cửa hàng đã tồn tại");
-      ra.addAttribute("userid", shop.getUserid());
+      ra.addAttribute("id", shop.getUserid());
       return "redirect:/shop/edit";
     }
     else {
