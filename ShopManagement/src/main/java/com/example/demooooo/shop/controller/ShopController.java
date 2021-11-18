@@ -103,6 +103,8 @@ public class ShopController {
       RedirectAttributes ra) {
     if (errors.hasErrors()) {
       return "editShop";
+
+
     }
     Optional<ShopDto> checkname = shopService.findShopByShopname(shop.getShopname());
     if (checkname.isPresent()) {
