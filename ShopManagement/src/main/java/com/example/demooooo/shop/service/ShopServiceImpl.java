@@ -38,16 +38,12 @@ public class ShopServiceImpl implements ShopService{
     }
 
     @Override
-    public Optional<ShopDto> findShopByUserId(Integer id) {
-        try{   
-            return Optional.of(shopMapper.modelToDto(shopRepository.findShopByUserid(id).get()));
-        } catch (Exception ex){
-            return Optional.ofNullable(null);
-        }
+    public Optional<ShopDto> findShopByUserid(Integer id) {
+        return Optional.ofNullable(shopMapper.modelToDto(shopRepository.findShopByUserid(id)));
     }
 
     @Override
     public Optional<ShopDto> findShopByShopname(String shopname){
-        return Optional.of(ShopMapper.INSTANCE.modelToDto(shopRepository.findShopByShopname(shopname).get()));
+            return Optional.ofNullable(shopMapper.modelToDto(shopRepository.findShopByShopname(shopname)));
     }
 }
