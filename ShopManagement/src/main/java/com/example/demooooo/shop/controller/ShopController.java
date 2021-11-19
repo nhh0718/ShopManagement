@@ -103,13 +103,12 @@ public class ShopController {
           RedirectAttributes ra) {
     if (errors.hasErrors()) {
       return "editShop";
-
-
     }
+    Optional<ShopDto> currentname = shopService.findShopById(id);
     Optional<ShopDto> checkname = shopService.findShopByShopname(shop.getShopname());
-    if (checkname.isPresent()) {
+    if (checkname.isPresent() && !currentname.get().getShopname().equals(checkname.get().getShopname())) {
       ra.addFlashAttribute("errorMessage", "Tên cửa hàng đã tồn tại");
-      ra.addAttribute("id", shop.getUserid());
+      ra.addAttribute("id", shop.getId());
       return "redirect:/shop/edit";
     }
     else {
