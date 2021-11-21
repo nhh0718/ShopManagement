@@ -7,9 +7,11 @@ import com.example.demooooo.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,11 +44,33 @@ public class ProductController {
     }
 
 
+//    @PostMapping("product/save")
+//    public String saveProduct(ProductDTO productDTO, RedirectAttributes redirectAttributes) {
+//        productService.saveProduct(productDTO);
+//        redirectAttributes.addAttribute("id", productDTO.getIdshop());
+//        return "redirect:/product";
+//    }
+
     @PostMapping("product/save")
-    public String saveProduct(ProductDTO productDTO, RedirectAttributes redirectAttributes) {
-        productService.saveProduct(productDTO);
-        redirectAttributes.addAttribute("id", productDTO.getIdshop());
-        return "redirect:/product";
+    public String saveProduct(
+            @Valid @ModelAttribute("product") ProductDTO productDTO,
+            Errors error,
+            RedirectAttributes redirectAttributes) {
+        if (error.hasErrors()) {
+            return "addproduct";
+        }
+        Optional<ProductDTO> checknameProduct =
+                productService.findProductByProductname(productDTO.getProductname());
+        if (checknameProduct.isPresent()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Sản phẩm đã tồn tại");
+            redirectAttributes.addAttribute("id", productDTO.getIdshop());
+            return "redirect:/product/addproduct";
+        } else {
+            productService.saveProduct(productDTO);
+            redirectAttributes.addFlashAttribute("message", "successfull");
+            redirectAttributes.addAttribute("id", productDTO.getIdshop());
+            return "redirect:/product";
+        }
     }
 
     @RequestMapping("product/delete")

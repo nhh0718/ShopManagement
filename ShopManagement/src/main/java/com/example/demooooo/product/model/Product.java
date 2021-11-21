@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
-@Table(name = "products")
+@Table(name = "product")
 public class Product {
 
     @Id
@@ -20,5 +20,6 @@ public class Product {
     private int idshop;
     private String productname;
     private double unitprice;
-    private int quantity, selledquantity;
+    private int quantity;
+    private int selledquantity;
 }

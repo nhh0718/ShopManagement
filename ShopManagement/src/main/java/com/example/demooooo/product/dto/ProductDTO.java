@@ -22,5 +22,6 @@ public class ProductDTO {
     private int idshop;
     private String productname;
     private double unitprice;
-    private int quantity, selledquantity;
+    private int quantity;
+    private int selledquantity;
 }
