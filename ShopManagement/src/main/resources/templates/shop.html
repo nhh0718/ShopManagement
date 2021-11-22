@@ -37,8 +37,8 @@
         </tbody>
         </thead>
     </table>
-    <div th:object="${shop}">
-        <a th:href="@{/product?id={id}(id=*{id})}">Xem sản phẩm</a>
+    <div th:object="${shop}" >
+        <a th:href="@{/product?id={id}&userid={userid}(id=*{id}, userid=*{userid})}" class="btn btn-primary">Xem sản phẩm</a>
     </div>
 </div>
 </body>

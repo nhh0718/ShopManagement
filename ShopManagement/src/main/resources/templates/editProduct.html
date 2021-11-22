@@ -9,8 +9,9 @@
 <div class="col-3"></div>
 <div class="container col-6">
     <h1 class=mr-3>Cập nhật sản phẩm</h1>
-    <form th:action="@{save}" th:object="${product}" action="#" method="post">
+    <form th:action="@{update}" th:object="${product}" action="#" method="post">
         <input type="hidden" th:value="${idshop}" name="idshop">
+        <input type="hidden" th:value="${userid}" name="userid">
         <input type="hidden" th:field="*{id}">
         <div>
             <label th:for="productname">Tên sản phẩm</label>
@@ -25,11 +26,6 @@
         <div>
             <label th:for="quantity">Số lượng</label>
             <input type="text" th:field="*{quantity}" class="form-control"/>
-        </div>
-        <div style="clear: both; display: block; height: 10px"></div>
-        <div>
-            <label th:for="selledquantity">Đã bán</label>
-            <input type="text" th:field="*{selledquantity}" class="form-control"/>
         </div>
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
